@@ -20,6 +20,14 @@ let db = {
       likeCount: "5",
       commentCount: "2"
     }
+  ],
+  comments: [
+    {
+      userHandle: "GarDog",
+      postId: "0aWai34RLWyf8CjjHLit",
+      body: "This is Rad!",
+      createdAt: "2020-01-22T06:16:09.255Z"
+    }
   ]
 };
 

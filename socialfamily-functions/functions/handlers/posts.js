@@ -40,7 +40,7 @@ exports.createOnePost = (req, res) => {
 
 exports.getPost = (req, res) => {
   let postData = {};
-  db.doc(`/posts/${req.params.screamId}`)
+  db.doc(`/posts/${req.params.postId}`)
     .get()
     .then(doc => {
       if (!doc.exists) {
@@ -56,7 +56,8 @@ exports.getPost = (req, res) => {
     .then(data => {
       postData.comments = [];
       data.forEach(doc => {
-        postData.push(doc.data());
+        console.log("THIS THE DOC", doc);
+        postData.comments.push(doc.data());
       });
       return res.json(postData);
     })

@@ -2,7 +2,7 @@ const functions = require("firebase-functions");
 const express = require("express");
 const app = express();
 
-const { getAllPosts, createOnePost } = require("./handlers/posts");
+const { getAllPosts, createOnePost, getPost } = require("./handlers/posts");
 const {
   signup,
   login,
@@ -19,6 +19,11 @@ const FBAuth = require("./util/fbAuth");
 /* POST ROUTES */
 app.get("/posts", getAllPosts);
 app.post("/post", FBAuth, createOnePost);
+app.get("/post/:postId", getPost);
+// Todo: Delete Post
+// Todo: Like Post
+// Todo: Unlike Post
+// Todo: Comment on Post
 
 /* SIGNUP / LOGIN ROUTES */
 app.post("/signup", signup);

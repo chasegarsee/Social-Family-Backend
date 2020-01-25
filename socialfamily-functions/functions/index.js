@@ -20,8 +20,6 @@ const {
 } = require("./handlers/users");
 const FBAuth = require("./util/fbAuth");
 
-/* CUSTOM VALIDATION */
-
 /* === === === === === === === === === === === === === === */
 
 /* POST ROUTES */

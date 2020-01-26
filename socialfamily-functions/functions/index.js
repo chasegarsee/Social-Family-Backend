@@ -6,7 +6,9 @@ const {
   getAllPosts,
   createOnePost,
   getPost,
-  commentOnPost
+  commentOnPost,
+  likePost,
+  unlikePost
 } = require("./handlers/posts");
 const {
   signup,
@@ -26,8 +28,8 @@ app.get("/posts", getAllPosts);
 app.post("/post", FBAuth, createOnePost);
 app.get("/post/:postId", getPost);
 // Todo: Delete Post
-// Todo: Like Post
-// Todo: Unlike Post
+app.get("/post/:postId/like", FBAuth, likePost);
+app.get("/post/:postId/unlike", FBAuth, unlikePost);
 app.post("/post/:postId/comment", FBAuth, commentOnPost);
 
 /* SIGNUP / LOGIN ROUTES */

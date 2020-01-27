@@ -22,27 +22,31 @@ const {
   getUserDetails,
   markNotificationsRead
 } = require("./handlers/users");
-const FBAuth = require("./util/fbAuth");
+
+const FbAuth = require("./util/fbAuth");
 
 /* === === === === === === === === === === === === === === */
 
 /* POST ROUTES */
 app.get("/posts", getAllPosts);
-app.post("/post", FBAuth, createOnePost);
+app.post("/post", FbAuth, createOnePost);
 app.get("/post/:postId", getPost);
-app.delete("/post/:postId", FBAuth, deletePost);
-app.get("/post/:postId/like", FBAuth, likePost);
-app.get("/post/:postId/unlike", FBAuth, unlikePost);
-app.post("/post/:postId/comment", FBAuth, commentOnPost);
+app.delete("/post/:postId", FbAuth, deletePost);
+app.get("/post/:postId/like", FbAuth, likePost);
+app.get("/post/:postId/unlike", FbAuth, unlikePost);
+app.post("/post/:postId/comment", FbAuth, commentOnPost);
 
 /* SIGNUP / LOGIN ROUTES */
 app.post("/signup", signup);
 app.post("/login", login);
-app.post("/user/image", FBAuth, uploadImage);
-app.post("/user", FBAuth, addUserDetails);
-app.get("/user", FBAuth, getAuthenticatedUser);
+app.post("/user/image", FbAuth, uploadImage);
+app.post("/user", FbAuth, addUserDetails);
+app.get("/user", FbAuth, getAuthenticatedUser);
 app.get("/user/:handle", getUserDetails);
-app.post("/notifications", FBAuth, markNotificationsRead);
+
+/* NOTIFICATION ROUTES */
+
+app.post("/notification-read", FbAuth, markNotificationsRead);
 
 exports.api = functions.https.onRequest(app);
 

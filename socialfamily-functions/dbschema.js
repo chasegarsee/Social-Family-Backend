@@ -28,6 +28,16 @@ let db = {
       body: "This is Rad!",
       createdAt: "2020-01-22T06:16:09.255Z"
     }
+  ],
+  notifications: [
+    {
+      createdAt: "2020-01-26T10:00:00.798Z",
+      recipient: "GarDog",
+      sender: "Syd",
+      type: "like",
+      read: false | true,
+      postId: "0aWai34RLWyf8CjjHLit"
+    }
   ]
 };
 

@@ -193,3 +193,26 @@ exports.unlikePost = (req, res) => {
       res.status(500).json({ error: err.code });
     });
 };
+
+exports.deletePost = (req, res) => {
+  const docToBeDel = db.doc(`/posts/${req.params.postId}`);
+  docToBeDel
+    .get()
+    .then(doc => {
+      if (!doc.exists) {
+        return res.status(404).json({ error: "Post not found" });
+      }
+      if (doc.data().userHandle !== req.user.handle) {
+        return res.status(403).json({ error: "Unauthorized" });
+      } else {
+        return docToBeDel.delete();
+      }
+    })
+    .then(() => {
+      res.json({ message: "Post deleted successfully" });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: err.code });
+    });
+};

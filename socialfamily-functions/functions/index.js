@@ -8,7 +8,8 @@ const {
   getPost,
   commentOnPost,
   likePost,
-  unlikePost
+  unlikePost,
+  deletePost
 } = require("./handlers/posts");
 const {
   signup,
@@ -27,7 +28,7 @@ const FBAuth = require("./util/fbAuth");
 app.get("/posts", getAllPosts);
 app.post("/post", FBAuth, createOnePost);
 app.get("/post/:postId", getPost);
-// Todo: Delete Post
+app.delete("/post/:postId", FBAuth, deletePost);
 app.get("/post/:postId/like", FBAuth, likePost);
 app.get("/post/:postId/unlike", FBAuth, unlikePost);
 app.post("/post/:postId/comment", FBAuth, commentOnPost);

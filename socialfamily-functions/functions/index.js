@@ -46,7 +46,7 @@ app.get("/user/:handle", getUserDetails);
 
 /* NOTIFICATION ROUTES */
 
-app.post("/notification-read", FbAuth, markNotificationsRead);
+app.post("/notifications", FbAuth, markNotificationsRead);
 
 exports.api = functions.https.onRequest(app);
 

@@ -174,7 +174,7 @@ exports.unlikePost = (req, res) => {
     })
     .then(data => {
       if (data.empty) {
-        return res.status(400).json({ error: "Post not liked" });
+        return res.status(400).json({ error: "This post has not been liked" });
       } else {
         return db
           .doc(`/likes/${data.docs[0].id}`)

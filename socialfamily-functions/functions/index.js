@@ -34,7 +34,7 @@ const FbAuth = require("./util/fbAuth");
 /* POST ROUTES */
 app.get("/posts", getAllPosts);
 app.post("/post", FbAuth, createOnePost);
-app.post("/post/image", FbAuth, createPostWithImage);
+app.post("/post/image/:postId", FbAuth, createPostWithImage);
 app.get("/post/:postId", getPost);
 app.delete("/post/:postId", FbAuth, deletePost);
 app.get("/post/:postId/like", FbAuth, likePost);

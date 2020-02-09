@@ -1,12 +1,16 @@
 const functions = require("firebase-functions");
 const express = require("express");
+const cors = require("cors");
 const app = express();
+
+app.use(cors({ origin: true }));
 
 const { db } = require("./util/admin");
 
 const {
   getAllPosts,
   createOnePost,
+  createPostWithImage,
   getPost,
   commentOnPost,
   likePost,
@@ -30,6 +34,7 @@ const FbAuth = require("./util/fbAuth");
 /* POST ROUTES */
 app.get("/posts", getAllPosts);
 app.post("/post", FbAuth, createOnePost);
+app.post("/post/image", FbAuth, createPostWithImage);
 app.get("/post/:postId", getPost);
 app.delete("/post/:postId", FbAuth, deletePost);
 app.get("/post/:postId/like", FbAuth, likePost);

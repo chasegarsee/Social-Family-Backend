@@ -1,4 +1,4 @@
-const { db } = require("../util/admin");
+const { admin, db } = require("../util/admin");
 
 exports.getAllPosts = (req, res) => {
   db.collection("posts")
@@ -17,6 +17,8 @@ exports.getAllPosts = (req, res) => {
     .catch(err => console.error(err));
 };
 
+/* CREATE A POST */
+
 exports.createOnePost = (req, res) => {
   if (req.method !== "POST") {
     return res.status(400).json({ error: "Method not allowed" });
@@ -28,7 +30,8 @@ exports.createOnePost = (req, res) => {
     createdAt: new Date().toISOString(),
     userImage: req.user.imageUrl,
     likeCount: 0,
-    commentCount: 0
+    commentCount: 0,
+    imageUrl: ""
   };
   db.collection("posts")
     .add(newPost)
@@ -42,6 +45,85 @@ exports.createOnePost = (req, res) => {
       res.status(500).json({ error: "Something went wrong" });
     });
 };
+
+/* CREATE A POST WITH AN IMAGE */
+exports.createPostWithImage = (req, res) => {
+  console.log(req.params.postId);
+  // if (req.method !== "POST") {
+  //   return res.status(400).json({ error: "Method not allowed" });
+  // }
+
+  // const newPost = {
+  //   body: req.body.body,
+  //   userHandle: req.user.handle,
+  //   createdAt: new Date().toISOString(),
+  //   userImage: req.user.imageUrl,
+  //   likeCount: 0,
+  //   commentCount: 0,
+  //   imageUrl: ""
+  // };
+
+  // db.collection("posts")
+  //   .add(newPost)
+  //   .then(doc => {
+  const BusBoy = require("busboy");
+  const path = require("path");
+  const os = require("os");
+  const fs = require("fs");
+
+  const busboy = new BusBoy({ headers: req.headers });
+  let imageFileName;
+  let imageToBeUploaded = {};
+
+  busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
+    if (mimetype !== "image/jpeg" && mimetype !== "image/png") {
+      return res.status(400).json({ error: "Wrong file type submitted" });
+    }
+    const imageExtention = filename.split(".")[filename.split(".").length - 1];
+    imageFileName = `${Math.round(Math.random() * 1000)}.${imageExtention}`;
+    const filePath = path.join(os.tmpdir(), imageFileName);
+    imageToBeUploaded = { filePath, mimetype };
+    file.pipe(fs.createWriteStream(filePath));
+  });
+  busboy.on("finish", () => {
+    admin
+      .storage()
+      .bucket("socialfamily-9d867.appspot.com")
+      .upload(imageToBeUploaded.filePath, {
+        resumable: false,
+        metadata: {
+          metadata: {
+            contentType: imageToBeUploaded.mimetype
+          }
+        }
+      })
+      .then(doc => {
+        const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/${imageFileName}?alt=media`;
+
+        db.doc(`/posts/${req.params.postId}`).update({ imageUrl });
+      })
+      .then(() => {
+        return res.json({ message: "Image Uploaded successfully" });
+      })
+      .catch(err => {
+        console.error(err);
+        return res.status(500).json({ error: err.code });
+      });
+    // .then(doc => {
+    //   const resPost = newPost;
+    //   resPost.postId = doc.id;
+
+    // })
+    // .catch(err => {
+    //   console.error(err);
+    //   return res.status(500).json({ error: err.code });
+    // });
+  });
+
+  busboy.end(req.rawBody);
+  //     });
+};
+
 /* GET SINGLE POST */
 exports.getPost = (req, res) => {
   let postData = {};

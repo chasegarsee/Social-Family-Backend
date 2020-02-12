@@ -135,22 +135,43 @@ exports.getPost = (req, res) => {
       }
       postData = doc.data();
       postData.postId = doc.id;
-      return db
-        .collection("comments")
-        .orderBy("createdAt", "desc")
-        .where("postId", "==", req.params.postId)
-        .get();
-    })
-    .then(data => {
-      postData.comments = [];
-      data.forEach(doc => {
-        postData.comments.push(doc.data());
-      });
-      return res.json(postData);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ error: "Something went wrong" });
+      const commentPromise = () =>
+        new Promise(resolve =>
+          setTimeout(
+            resolve,
+            0001,
+            db
+              .collection("comments")
+              .orderBy("createdAt", "desc")
+              .where("postId", "==", req.params.postId)
+              .get()
+          )
+        );
+
+      Promise.resolve()
+        .then(() => {
+          const commentProm = commentPromise();
+          const likesValue = db
+            .collection("likes")
+            .where("postId", "==", req.params.postId)
+            .get();
+          return Promise.all([commentProm, likesValue]);
+        })
+        .then(([comments, likes]) => {
+          postData.comments = [];
+          postData.likes = [];
+          comments.forEach(doc => {
+            postData.comments.push(doc.data());
+          });
+          likes.forEach(doc => {
+            postData.likes.push(doc.data());
+          });
+          return res.json(postData);
+        })
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({ error: "Something went wrong" });
+        });
     });
 };
 

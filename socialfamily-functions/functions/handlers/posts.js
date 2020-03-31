@@ -49,23 +49,6 @@ exports.createOnePost = (req, res) => {
 /* CREATE A POST WITH AN IMAGE */
 exports.createPostWithImage = (req, res) => {
   console.log(req.params.postId);
-  // if (req.method !== "POST") {
-  //   return res.status(400).json({ error: "Method not allowed" });
-  // }
-
-  // const newPost = {
-  //   body: req.body.body,
-  //   userHandle: req.user.handle,
-  //   createdAt: new Date().toISOString(),
-  //   userImage: req.user.imageUrl,
-  //   likeCount: 0,
-  //   commentCount: 0,
-  //   imageUrl: ""
-  // };
-
-  // db.collection("posts")
-  //   .add(newPost)
-  //   .then(doc => {
   const BusBoy = require("busboy");
   const path = require("path");
   const os = require("os");
@@ -109,19 +92,8 @@ exports.createPostWithImage = (req, res) => {
         console.error(err);
         return res.status(500).json({ error: err.code });
       });
-    // .then(doc => {
-    //   const resPost = newPost;
-    //   resPost.postId = doc.id;
-
-    // })
-    // .catch(err => {
-    //   console.error(err);
-    //   return res.status(500).json({ error: err.code });
-    // });
   });
-
   busboy.end(req.rawBody);
-  //     });
 };
 
 /* GET SINGLE POST */
@@ -148,7 +120,7 @@ exports.getPost = (req, res) => {
           )
         );
 
-      Promise.resolve()
+      Promise.resolve()  
         .then(() => {
           const commentProm = commentPromise();
           const likesValue = db

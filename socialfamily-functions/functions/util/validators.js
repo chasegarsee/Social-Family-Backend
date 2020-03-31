@@ -51,6 +51,7 @@ exports.reduceUserDetails = data => {
     } else userDetails.website = data.website;
   }
   if (!isEmpty(data.location.trim())) userDetails.location = data.location;
+  if (!isEmpty(data.navColor.trim())) userDetails.navColor = data.navColor;
 
   return userDetails;
 };

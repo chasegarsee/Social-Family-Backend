@@ -26,6 +26,12 @@ const {
   getUserDetails,
   markNotificationsRead
 } = require("./handlers/users");
+const {
+  getAllClients,
+  createClient,
+  deleteClient
+} = require('./handlers/clients')
+
 
 const FbAuth = require("./util/fbAuth");
 
@@ -48,6 +54,11 @@ app.post("/user/image", FbAuth, uploadImage);
 app.post("/user", FbAuth, addUserDetails);
 app.get("/user", FbAuth, getAuthenticatedUser);
 app.get("/user/:handle", getUserDetails);
+
+/* CLIENT ROUTES */
+app.get("/clients", getAllClients)
+app.post("/client", FbAuth, createClient)
+app.delete("/client/:clientId", FbAuth, deleteClient)
 
 /* NOTIFICATION ROUTES */
 

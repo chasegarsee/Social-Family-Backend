@@ -15,7 +15,9 @@ exports.signup = (req, res) => {
     email: req.body.email,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
-    handle: req.body.handle
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    handle: req.body.firstName + " " + req.body.lastName
   };
   const { valid, errors } = validateSignupData(newUser);
 

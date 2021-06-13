@@ -28,7 +28,10 @@ const {
 } = require("./handlers/users");
 const {
   getAllClients,
+  getClient,
+  checkinOnClient,
   createClient,
+  updateClient,
   deleteClient
 } = require('./handlers/clients')
 
@@ -57,7 +60,10 @@ app.get("/user/:handle", getUserDetails);
 
 /* CLIENT ROUTES */
 app.get("/clients", getAllClients)
-app.post("/client", FbAuth, createClient)
+app.get('/client/:clientId', getClient)
+app.post("/client/:clientId/checkin", checkinOnClient);
+app.post("/client", createClient)
+app.put('/client/:clientId', updateClient)
 app.delete("/client/:clientId", FbAuth, deleteClient)
 
 /* NOTIFICATION ROUTES */

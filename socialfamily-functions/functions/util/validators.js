@@ -55,3 +55,37 @@ exports.reduceUserDetails = data => {
 
   return userDetails;
 };
+
+
+
+exports.reduceClientDetails = data => {
+  let clientDetails = {};
+
+  clientDetails.admin = data.admin
+  clientDetails.macrosClientReady = data.macrosClientReady
+  clientDetails.carbCycling = data.carbCycling
+  if (!isEmpty(data.activityLevel.trim())) clientDetails.activityLevel = data.activityLevel;
+  if (!isEmpty(data.age.trim())) clientDetails.age = data.age;
+  if (!isEmpty(data.carbCyclingMacros.highCarbDay.calories.trim())) clientDetails.carbCyclingMacros.highCarbDay.calories = data.carbCyclingMacros.highCarbDay.calories;
+  if (!isEmpty(data.carbCyclingMacros.highCarbDay.carbs.trim())) clientDetails.carbCyclingMacros.highCarbDay.carbs = data.carbCyclingMacros.highCarbDay.carbs;
+  if (!isEmpty(data.carbCyclingMacros.highCarbDay.protein.trim())) clientDetails.carbCyclingMacros.highCarbDay.protein = data.carbCyclingMacros.highCarbDay.protein;
+  if (!isEmpty(data.carbCyclingMacros.highCarbDay.fat.trim())) clientDetails.carbCyclingMacros.highCarbDay.fat = data.carbCyclingMacros.highCarbDay.fat;
+  if (!isEmpty(data.carbCyclingMacros.lowCarbDay.calories.trim())) clientDetails.carbCyclingMacros.lowCarbDay.calories = data.carbCyclingMacros.lowCarbDay.calories;
+  if (!isEmpty(data.carbCyclingMacros.lowCarbDay.carbs.trim())) clientDetails.carbCyclingMacros.lowCarbDay.carbs = data.carbCyclingMacros.lowCarbDay.carbs;
+  if (!isEmpty(data.carbCyclingMacros.lowCarbDay.protein.trim())) clientDetails.carbCyclingMacros.lowCarbDay.protein = data.carbCyclingMacros.lowCarbDay.protein;
+  if (!isEmpty(data.carbCyclingMacros.lowCarbDay.fat.trim())) clientDetails.carbCyclingMacros.lowCarbDay.fat = data.carbCyclingMacros.lowCarbDay.fat;
+  if (!isEmpty(data.customMacroPlan.calories.trim())) clientDetails.customMacroPlan.calories = data.customMacroPlan.calories;
+  if (!isEmpty(data.customMacroPlan.carbs.trim())) clientDetails.customMacroPlan.carbs = data.customMacroPlan.carbs;
+  if (!isEmpty(data.customMacroPlan.protein.trim())) clientDetails.customMacroPlan.protein = data.customMacroPlan.protein;
+  if (!isEmpty(data.customMacroPlan.fat.trim())) clientDetails.customMacroPlan.fat = data.customMacroPlan.fat;
+  if (!isEmpty(data.firstName.trim())) clientDetails.firstName = data.firstName;
+  if (!isEmpty(data.lastName.trim())) clientDetails.lastName = data.lastName;
+  if (!isEmpty(data.gender.trim())) clientDetails.gender = data.gender;
+  if (!isEmpty(data.inches.trim())) clientDetails.inches = data.inches;
+  if (!isEmpty(data.feet.trim())) clientDetails.feet = data.feet;
+  if (!isEmpty(data.startingWeight.trim())) clientDetails.startingWeight = data.startingWeight;
+  if (!isEmpty(data.tdee.trim())) clientDetails.tdee = data.tdee;
+  if (!isEmpty(data.weight.trim())) clientDetails.weight = data.weight;
+
+  return clientDetails;
+};

@@ -35,6 +35,10 @@ const {
   deleteClient
 } = require('./handlers/clients')
 
+const {
+  getAllSocialPosts
+} = require('./handlers/socialPosts')
+
 
 const FbAuth = require("./util/fbAuth");
 
@@ -65,6 +69,9 @@ app.post("/client/:clientId/checkin", checkinOnClient);
 app.post("/client", createClient)
 app.put('/client/:clientId', updateClient)
 app.delete("/client/:clientId", FbAuth, deleteClient)
+
+/* SOCIAL ROUTES */
+app.get("/social-posts/", getAllSocialPosts)
 
 /* NOTIFICATION ROUTES */
 

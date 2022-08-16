@@ -24,6 +24,7 @@ const {
   addUserDetails,
   getAuthenticatedUser,
   getUserDetails,
+  getClientDetails,
   markNotificationsRead
 } = require("./handlers/users");
 const {
@@ -57,6 +58,7 @@ app.post("/user/image", FbAuth, uploadImage);
 app.post("/user", FbAuth, addUserDetails);
 app.get("/user", FbAuth, getAuthenticatedUser);
 app.get("/user/:handle", getUserDetails);
+app.get("/user-clients", FbAuth, getClientDetails)
 
 /* CLIENT ROUTES */
 app.get("/clients", getAllClients)

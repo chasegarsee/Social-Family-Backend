@@ -1,5 +1,5 @@
 module.exports = firebaseConfig = {
-  apiKey: "AIzaSyCuUVzM7CwJ0QEQ4OvvKc06nJ8vIn0ylC0",
+  apiKey: "AIzaSyBzphrRTdmFImMUWBSEwbD7LDXXnVCGVIw",
   authDomain: "socialfamily-9d867.firebaseapp.com",
   databaseURL: "https://socialfamily-9d867.firebaseio.com",
   projectId: "socialfamily-9d867",

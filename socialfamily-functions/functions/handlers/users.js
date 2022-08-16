@@ -2,6 +2,7 @@ const { admin, db } = require("../util/admin");
 const firebase = require("firebase");
 const firebaseConfig = require("../util/config.js");
 
+
 firebase.initializeApp(firebaseConfig);
 
 const {
@@ -235,6 +236,37 @@ exports.getUserDetails = (req, res) => {
       return res.status(500).json({ error: err.code });
     });
 };
+
+exports.getClientDetails = async (req, res) => {
+  let userData = {};
+  let userClients = []
+  try {
+    const doc = await db.doc(`/users/${req.user.handle}`).get()
+    if (doc) {
+      userData.user = doc.data()
+    } else {
+      return res.status(404).json({ error: "User not found" });
+    }
+    try{
+      for (const client of userData.user.clients) {
+        const clientDoc = await db.doc(`/users/${client}`).get()
+        if (clientDoc) {
+        userClients.push(clientDoc.data())
+        } else {
+        return res.status(404).json({ error: "User not found" });
+        }
+      }
+      userData.clients = userClients
+    } catch(err) {
+      console.error(err);
+      return res.status(500).json({ error: err.code });  
+    }
+    return res.json(userData);
+  } catch(err) {
+    console.error(err);
+    return res.status(500).json({ error: err.code });
+  }
+}
 
 exports.markNotificationsRead = (req, res) => {
   let batch = db.batch();
